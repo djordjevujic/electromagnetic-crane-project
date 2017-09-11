@@ -1,9 +1,25 @@
 // A4988 driver test routine
+/* 
+ * STEPPER 2 CLICK:
+ *  supply voltage: 12V (energetic)
+ *                  3.3V or 5V (electronic)
+ *                 
+ * Connecting pins:
+ * STEPPER 2 CLICK      Arduino     
+ *  EN------------------6
+ *  RST-----------------VCC
+ *  SL------------------VCC
+ *  DIR-----------------2
+ *  ST------------------4
+ *  Don't forget to connect grounds and VCC (3.3V or 5V are compatible)
+*/
+
 #define ENABLE 6
 #define STEP 4
 #define DIR 2
 
 #define STEPS_PER_ROTATION 200
+#define STEPPING_SCALE     4
 
 #define DEBUG 1
 
@@ -42,7 +58,7 @@ void walkOneCircle()
   #ifdef DEBUG
     Serial.println("walkOneCircle function called!");
   #endif
-  stepNow(STEPS_PER_ROTATION*4);  
+  stepNow(STEPS_PER_ROTATION*STEPPING_SCALE);  
 }
 
 void walkOneDirection()
@@ -77,4 +93,3 @@ void loop() {
   //digitalWrite(ENABLE,LOW);
   //walkBothDirections();
 }
-
