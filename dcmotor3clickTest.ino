@@ -112,7 +112,6 @@ void setPwmFrequency(int pin, int divisor) {
   }
 }
 
-
 void setup() {
   // put your setup code here, to run once:
  
