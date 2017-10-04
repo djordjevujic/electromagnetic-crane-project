@@ -28,6 +28,7 @@ char IN1  = 0;
 char IN2  = 0;
 char SLP  = 1;
 char speed = 127;
+char serial_input;
 
 void dc_motor3_brake()
 {
@@ -43,7 +44,7 @@ void dc_motor3_stop()
      SLP = 1;
      digitalWrite(SLP_PIN, HIGH);
   }
-  digitalWrite(IN2_PIN, LOW);
+  digitalWrite(IN1_PIN, LOW);
   digitalWrite(IN2_PIN, LOW);
   IN1 = IN2 = 0;  
 }
@@ -114,6 +115,10 @@ void setPwmFrequency(int pin, int divisor) {
 
 void setup() {
   // put your setup code here, to run once:
+ Serial.begin(57200);
+  while(!Serial){
+    ;
+  }
  
   pinMode(SLP_PIN, OUTPUT);
   pinMode(IN1_PIN, OUTPUT);
@@ -123,10 +128,25 @@ void setup() {
   setPwmFrequency(PWM_PIN, PWM_FREQ_DIVISOR);
 
   //dc_motor3_counter_clockwise();
+  dc_motor3_stop();
   dc_motor3_set_speed(speed);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
+  while(!Serial.available());
+  serial_input = Serial.read();
+  if(serial_input == 'w')
+  {
+    dc_motor3_counter_clockwise();
+  }
+  if(serial_input== 'x')
+  {
+    dc_motor3_clockwise();
+  }
+  if(serial_input == 's')
+  {
+    dc_motor3_stop();
+  }
   
 }
