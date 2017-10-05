@@ -1,0 +1,42 @@
+// A4988 driver test routine
+/* 
+ * STEPPER 2 CLICK:
+ *  supply voltage: 12V (energetic)
+ *                  3.3V or 5V (electronic)
+ *                 
+ * Connecting pins:
+ * STEPPER 2 CLICK      Arduino     
+ *  EN------------------6
+ *  RST-----------------VCC
+ *  SL------------------VCC
+ *  DIR-----------------2
+ *  ST------------------4
+ *  Don't forget to connect grounds and VCC (3.3V or 5V are compatible)
+*/
+/*
+ * TB6549FG Motorola DC driver
+ * DC MOTOR3 click
+ *  supply voltage: max 30V (energetic)
+ *                  5V (electronics)
+ *  Connecting pins 
+ *  DCMotor3Click       Arduino
+ *  SLP-----------------11
+ *  IN1-----------------8
+ *  IN2-----------------9
+ *  PWM-----------------10
+ *  
+ *  The base frequency for pins 3, 9, 10, and 11 is 31250 Hz.
+
+ *  divisors for 3 and 11 are 1,8,32,64,128,256,1024
+ *  divsors  for 5, 6, 9 and 10 are 1, 8, 64, 256, 1024
+*/
+/*
+ *  ULTRASONIC SENSOR HC-SR-04
+ *  TRIG---------------12
+ *  ECHO---------------13
+*/
+/*
+ *  RELAY MODULE
+ *  CONTROL------------7
+ *  
+*/
