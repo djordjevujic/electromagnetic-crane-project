@@ -27,7 +27,7 @@ char readByte;
 char IN1  = 0;
 char IN2  = 0;
 char SLP  = 1;
-char speed = 127;
+char speed = 160;
 
 const int trigPin = 12;
 const int echoPin = 13;
@@ -144,12 +144,12 @@ void setPwmFrequency(int pin, int divisor) {
 
 void relay_activate()
 {
-  digitalWrite(RELAY_PIN, HIGH);
+  digitalWrite(RELAY_PIN, LOW);
 }
 
 void relay_deactivate()
 {
-  digitalWrite(RELAY_PIN, LOW);
+  digitalWrite(RELAY_PIN, HIGH);
 }
 
 void setup() {
