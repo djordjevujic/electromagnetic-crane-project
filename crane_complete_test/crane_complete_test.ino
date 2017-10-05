@@ -17,6 +17,8 @@
 #define PWM_PIN     10
 #define PWM_FREQ_DIVISOR    8
 
+#define RELAY_PIN 7
+
 #define DEBUG 1
 
 char readByte;
@@ -135,6 +137,17 @@ void setPwmFrequency(int pin, int divisor) {
     TCCR2B = TCCR2B & 0b11111000 | mode;
   }
 }
+
+void relay_activate()
+{
+  digitalWrite(RELAY_PIN, HIGH);
+}
+
+void relay_deactivate()
+{
+  digitalWrite(RELAY_PIN, LOW);
+}
+
 void setup() {
   Serial.begin(57600);
   while (!Serial) {
@@ -145,6 +158,7 @@ void setup() {
     Serial.println("Debuging mode is ON!");
     Serial.println("Baud rate is 57600");
   #endif
+  pinMode(RELAY_PIN, OUTPUT);
   //Stepper
   pinMode(ENABLE,OUTPUT);
   pinMode(STEP,OUTPUT);
@@ -191,5 +205,12 @@ void loop() {
   {
     dc_motor3_stop();
   }
-  
+  else if(readByte == 'r')
+  {
+    relay_activate();
+  }
+  else if(readByte == 't')
+  {
+    relay_deactivate();
+  }
 }
