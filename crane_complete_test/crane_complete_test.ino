@@ -29,6 +29,10 @@ char IN2  = 0;
 char SLP  = 1;
 char speed = 127;
 
+const int trigPin = 12;
+const int echoPin = 13;
+int distance;
+
 void stepNow(int totalSteps) {
   Serial.print(totalSteps);
   Serial.println(F(" steps."));
@@ -158,6 +162,10 @@ void setup() {
     Serial.println("Debuging mode is ON!");
     Serial.println("Baud rate is 57600");
   #endif
+  //ultrasonic sensor
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+  
   pinMode(RELAY_PIN, OUTPUT);
   //Stepper
   pinMode(ENABLE,OUTPUT);
@@ -173,6 +181,25 @@ void setup() {
   
   dc_motor3_stop();
   dc_motor3_set_speed(speed);
+}
+
+int read_distance()
+{
+  long duration;
+  int distanceCm;
+  
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+  duration = pulseIn(echoPin, HIGH);
+  distanceCm= duration*0.034/2;
+  delay(10);
+  Serial.print("Distance is: ");
+  Serial.println(distanceCm);
+  
+  return distanceCm;
 }
 
 void loop() {
@@ -212,5 +239,9 @@ void loop() {
   else if(readByte == 't')
   {
     relay_deactivate();
+  }
+  else if(readByte == 'q')
+  {
+    distance = read_distance();
   }
 }
