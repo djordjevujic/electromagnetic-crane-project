@@ -144,12 +144,12 @@ void setPwmFrequency(int pin, int divisor) {
 
 void relay_activate()
 {
-  digitalWrite(RELAY_PIN, LOW);
+  digitalWrite(RELAY_PIN, HIGH);r
 }
 
 void relay_deactivate()
 {
-  digitalWrite(RELAY_PIN, HIGH);
+  digitalWrite(RELAY_PIN, LOW);
 }
 
 void setup() {

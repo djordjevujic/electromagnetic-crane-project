@@ -145,12 +145,12 @@ void setPwmFrequency(int pin, int divisor) {
 
 void relay_activate()
 {
-  digitalWrite(RELAY_PIN, LOW);
+  digitalWrite(RELAY_PIN, HIGH);
 }
 
 void relay_deactivate()
 {
-  digitalWrite(RELAY_PIN, HIGH);
+  digitalWrite(RELAY_PIN, LOW);
 }
 
 void setup() {
@@ -217,19 +217,20 @@ void loop() {
     do{
       cp = true;
       distance = read_distance();
-      if(distance < 11 || distance > 15)
+      if(distance < 10 || distance > 14)
         cp = false; 
-      delay(200);
+      delay(300);
       distance = read_distance();
-      if(distance < 11 || distance > 15)
+      if(distance < 10 || distance > 14)
         cp = false;
-      delay(200);
+      delay(300);
       distance = read_distance();
-      if(distance < 11 || distance > 15)
+      if(distance < 10 || distance > 14)
         cp = false;
-      delay(200);  
+      delay(300);  
     }while(cp == false);
-    for(i = 0; i < 11; i++)
+    
+    for(i = 0; i < 8; i++)
     {
       dc_motor3_clockwise();
       if(Serial.available())
@@ -245,6 +246,61 @@ void loop() {
       delay(500);
     }
     dc_motor3_stop();
+    delay(1500);
+    for(i = 0; i < 6; i++)
+    {
+      dc_motor3_counter_clockwise();
+      if(Serial.available())
+      {
+        readByte = Serial.read();
+        if(readByte == 's')
+        {
+          dc_motor3_stop();
+          relay_deactivate();
+        }
+        break;
+      }
+      delay(500);
+    }
+    dc_motor3_stop();
+    delay(4000);
+    //Drugi put dole
+    for(i = 0; i < 6; i++)
+    {
+      dc_motor3_clockwise();
+      if(Serial.available())
+      {
+        readByte = Serial.read();
+        if(readByte == 's')
+        {
+          dc_motor3_stop();
+          relay_deactivate();
+        }
+        break;
+      }
+      delay(500);
+    }
+    dc_motor3_stop();
+    delay(1000);
+    relay_deactivate();
+    delay(1000);
+    //Drugi put gore  
+     for(i = 0; i < 8; i++)
+    {
+      dc_motor3_counter_clockwise();
+      if(Serial.available())
+      {
+        readByte = Serial.read();
+        if(readByte == 's')
+        {
+          dc_motor3_stop();
+          relay_deactivate();
+        }
+        break;
+      }
+      delay(500);
+    }
+    dc_motor3_stop();  
   }
   if(readByte == 'a')
   {
